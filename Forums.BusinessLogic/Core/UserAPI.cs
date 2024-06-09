@@ -13,17 +13,20 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
+using Forums.Domain.Entities.Posts;
 
 namespace Forums.BusinessLogic.Core
 {
     public class UserApi
     {
         private readonly UserContext _userContext;
+        private readonly PostContext _postContext;
         private readonly SessionContext _sessionContext;
         private readonly IMapper _mapper;
 
-        public UserApi(UserContext userContext, SessionContext sessionContext, IMapper mapper)
+        public UserApi(UserContext userContext, SessionContext sessionContext, IMapper mapper, PostContext postContext)
         {
+            _postContext = postContext;
             _userContext = userContext;
             _sessionContext = sessionContext;
             _mapper = mapper;
@@ -221,5 +224,68 @@ namespace Forums.BusinessLogic.Core
             var result = await _userContext.Users.FirstOrDefaultAsync(e => e.Email == email);
             return result == null ? new GeneralResp { Status = false } : new GeneralResp { Status = true };
         }
+
+        public async Task<GeneralResp> SavePostAsync(int userId, int postId)
+        {
+            var existingSavedPost = await _postContext.SavedPosts
+                .FirstOrDefaultAsync(sp => sp.UserId == userId && sp.PostId == postId);
+
+            if (existingSavedPost != null)
+            {
+                return new GeneralResp { Status = false, StatusMsg = "Post already saved" };
+            }
+
+            var savedPost = new SavedPost
+            {
+                UserId = userId,
+                PostId = postId
+            };
+
+            _postContext.SavedPosts.Add(savedPost);
+            await _userContext.SaveChangesAsync();
+
+            return new GeneralResp { Status = true, StatusMsg = "Post saved successfully" };
+        }
+
+        public async Task<GeneralResp> UnSavePostAsync(int userId, int postId)
+        {
+            var savedPost = await _postContext.SavedPosts
+                .FirstOrDefaultAsync(sp => sp.UserId == userId && sp.PostId == postId);
+
+            if (savedPost == null)
+            {
+                return new GeneralResp { Status = false, StatusMsg = "Post not saved" };
+            }
+
+            _postContext.SavedPosts.Remove(savedPost);
+            await _userContext.SaveChangesAsync();
+
+            return new GeneralResp { Status = true, StatusMsg = "Post unsaved successfully" };
+        }
+
+        public async Task<GeneralResp> ReplyToCommentAsync(int parentCommentId, int userId, string content)
+        {
+            var parentComment = await _postContext.Comments.FindAsync(parentCommentId);
+
+            if (parentComment == null)
+            {
+                return new GeneralResp { Status = false, StatusMsg = "Parent comment not found" };
+            }
+
+            var reply = new Comment
+            {
+                Content = content,
+                CreatedAt = DateTime.UtcNow,
+                UserId = userId,
+                ParentCommentId = parentCommentId,
+                PostId = parentComment.PostId
+            };
+
+            _postContext.Comments.Add(reply);
+            await _userContext.SaveChangesAsync();
+
+            return new GeneralResp { Status = true, StatusMsg = "Reply added successfully" };
+        }
+
     }
 }

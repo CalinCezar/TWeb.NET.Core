@@ -10,8 +10,8 @@ namespace Forums.BusinessLogic
 {
     public class UserBL : UserApi, IUser
     {
-        public UserBL(UserContext userContext, SessionContext sessionContext, IMapper mapper)
-            : base(userContext, sessionContext, mapper)
+        public UserBL(UserContext userContext, SessionContext sessionContext, IMapper mapper, PostContext postContext)
+            : base(userContext, sessionContext, mapper, postContext)
         {
         }
 

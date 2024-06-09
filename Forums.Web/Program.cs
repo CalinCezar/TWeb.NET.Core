@@ -34,10 +34,13 @@ builder.Services.AddDbContext<UserContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<SessionContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<PostContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register ISession, IUser
+// Register ISession, IUser, IPost
 builder.Services.AddScoped<Forums.BusinessLogic.Interfaces.ISession, SessionBL>();
 builder.Services.AddScoped<IUser, UserBL>();
+builder.Services.AddScoped<IPost, PostBL>();
 
 // Register BusinessLogic 
 builder.Services.AddScoped<BusinessLogic>();

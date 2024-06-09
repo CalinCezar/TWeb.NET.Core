@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Forums.Domain.Entities.Posts;
 using Forums.Domain.Enum;
 
 namespace Forums.Domain.Entities.User
@@ -51,6 +52,8 @@ namespace Forums.Domain.Entities.User
         [StringLength(30)]
         public string Fullname { get; set; }
 
-
+        public ICollection<Like> Likes { get; set; }
+        public ICollection<SavedPost> SavedPosts { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

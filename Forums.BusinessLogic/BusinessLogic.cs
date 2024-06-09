@@ -1,5 +1,6 @@
 ﻿using Forums.BusinessLogic.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Forums.BusinessLogic
 {
@@ -20,6 +21,11 @@ namespace Forums.BusinessLogic
         public IUser GetUserBL()
         {
             return _serviceProvider.GetRequiredService<IUser>();
+        }
+
+        public IPost GetPostBL()
+        {
+            return _serviceProvider.GetRequiredService<IPost>();
         }
     }
 }

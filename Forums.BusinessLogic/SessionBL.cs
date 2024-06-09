@@ -11,8 +11,8 @@ namespace Forums.BusinessLogic
 {
     public class SessionBL : UserApi, Forums.BusinessLogic.Interfaces.ISession
     {
-        public SessionBL(UserContext userContext, SessionContext sessionContext, IMapper mapper)
-            : base(userContext, sessionContext, mapper)
+        public SessionBL(UserContext userContext, SessionContext sessionContext, IMapper mapper, PostContext postContext)
+            : base(userContext, sessionContext, mapper, postContext)
         {
         }
 
