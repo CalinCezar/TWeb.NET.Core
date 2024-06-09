@@ -64,12 +64,12 @@ else
     app.UseHsts();
 }
 
+// Enable session
+app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
-// Enable session
-app.UseSession();
 
 app.UseAuthorization();
 

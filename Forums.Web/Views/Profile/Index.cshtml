@@ -44,11 +44,28 @@
                         icon: "warning",
                         buttons: true,
                         dangerMode: true,
-
                     })
                         .then((willDelete) => {
                             if (willDelete) {
-                                window.location.href = "/Profile/DeleteUser";
+                                $.ajax({
+                                    url: "@Url.Action("DeleteUser", "Profile")",
+                                    type: "POST",
+                                    data: { id: id },
+                                    success: function (response) {
+                                        if (response.success) {
+                                            swal("Deleted", {
+                                                icon: "success",
+                                            }).then(() => {
+                                                window.location.href = "@Url.Action("Index", "Login")"; // Redirecționare după ștergere
+                                            });
+                                        } else {
+                                            swal("Error", "An error occurred while deleting the user.", "error");
+                                        }
+                                    },
+                                    error: function (xhr) {
+                                        swal("Error", "An error occurred while deleting the user.", "error");
+                                    }
+                                });
                             } else {
                                 swal("Not deleted");
                             }
@@ -56,6 +73,7 @@
                 });
             });
         </script>
+
 
         <div class="row">
             <div class="col-md-4">

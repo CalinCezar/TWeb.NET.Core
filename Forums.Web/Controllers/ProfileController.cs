@@ -53,9 +53,9 @@ namespace Forums.Web.Controllers
                 HttpContext.Session.Remove("LoginStatus");
                 DeleteCookies();
 
-                return RedirectToAction("Index", "Login");
+                return Json(new { success = true });
             }
-            return RedirectToAction("Index", "Login");
+            return Json(new { success = false });
         }
 
         [HttpPost]
