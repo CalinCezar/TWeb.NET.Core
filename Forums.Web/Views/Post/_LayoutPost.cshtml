@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html>
 <head>
     <meta charset="utf-8">
-    <title>#BlogHub</title>
-    <link rel="icon" type="image/x-icon" href="~/images/icon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="title" content="Ask online Form">
@@ -15,13 +12,12 @@
     <link href="~/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="~/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/css/editor.css" rel="stylesheet" type="text/css">
-
+    <link href="~/css/animate.css" rel="stylesheet" type="text/css">
     <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="~/css/responsive.css" rel="stylesheet" type="text/css">
-
 </head>
+<link href="~/css/responsive.css" rel="stylesheet" type="text/css">
 
-<body>
+<body >
 
     <!-- ========== Header =======-->
     @Html.Partial("~/Views/Home/HomeLayout/_Header.cshtml")
@@ -29,8 +25,8 @@
     <!--======= Main Content =====-->
     @RenderBody()
 
-    <!--======== Footer =======-->
-    @Html.Partial("~/Views/Home/HomeLayout/_Footer.cshtml")
+  @*   <!--======== Footer =======-->
+    @Html.Partial("~/Views/Shared/_Footer.cshtml") *@
 
 
 </body>

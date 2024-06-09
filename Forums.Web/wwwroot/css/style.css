@@ -1516,7 +1516,6 @@ h5 {
 .question-ttile32 {
     width: 75%;
     height: 40px;
-    background-color: #F3F3F3;
     border: none;
     outline: inherit;
     padding: 10px;
@@ -1616,7 +1615,7 @@ h5 {
     padding: 5px 15px 5px 15px;
     width: 100%;
     color: #fff;
-    background-color: #FF6652;
+    background-color: #ed6738;
     border: none;
     border-radius: 3px;
     font-weight: bold;
@@ -1627,7 +1626,7 @@ h5 {
         padding: 5px 15px 5px 15px;
         width: 100%;
         color: #fff;
-        background-color: #222629;
+        background-color: #933f21;
         border: none;
         border-radius: 3px;
         font-weight: bold;
