@@ -52,22 +52,27 @@ namespace Forums.Web.Controllers
             }
             return View(uRegis);
         }
-       
+
         public IActionResult Reset(string token, string email)
         {
-            
-            
-            if (HttpContext.Session.TryGetValue("ResetTokenExpiration", out byte[] resetTokenEx))
+            if (!HttpContext.Session.TryGetValue("ResetToken", out byte[] storedTokenBytes) ||
+                !HttpContext.Session.TryGetValue("Email", out byte[] storedEmailBytes) ||
+                !HttpContext.Session.TryGetValue("ResetTokenExpiration", out byte[] storedExpirationBytes))
             {
-                
+                return RedirectToAction("Index", "ResetPassword");
             }
 
-            if (HttpContext.Session.GetString("ResetToken") == token && email == HttpContext.Session.GetString("Email") && resetTokenExpiration.HasValue && resetTokenExpiration.Value > DateTime.Now)
+            string storedToken = System.Text.Encoding.UTF8.GetString(storedTokenBytes);
+            string storedEmail = System.Text.Encoding.UTF8.GetString(storedEmailBytes);
+            DateTime.TryParse(System.Text.Encoding.UTF8.GetString(storedExpirationBytes), out DateTime storedExpiration);
+
+            if (storedToken != token || storedEmail != email || storedExpiration <= DateTime.Now)
             {
-                HttpContext.Session.SetString("Email", email);
-                return View();
+                return RedirectToAction("Index", "ResetPassword");
             }
-            return RedirectToAction("Index", "ResetPassword");
+
+            HttpContext.Session.SetString("Email", email);
+            return View();
         }
 
         [HttpPost]
