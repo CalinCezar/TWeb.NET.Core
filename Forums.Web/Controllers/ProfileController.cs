@@ -64,9 +64,13 @@ namespace Forums.Web.Controllers
             var user = HttpContext.GetMySessionObject();
             if (ModelState.IsValid)
             {
+                data.Fullname = data.Fullname ?? String.Empty;
+                data.InfoBlog = data.InfoBlog ?? String.Empty;
+                data.Profession = data.Profession ?? String.Empty;
+                data.PhoneNumber = data.PhoneNumber ?? String.Empty;
+
                 var dataUser = new UserMinimal
                 {
-                    Username = data.Username,
                     Fullname = data.Fullname,
                     Email = data.Email,
                     InfoBlog = data.InfoBlog,

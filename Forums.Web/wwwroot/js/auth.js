@@ -12,7 +12,6 @@ var conPasswordAccept = document.getElementById('con-password-accept-data');
 var emailAccept = document.getElementById('email-accept-data');
 var infoAccept = document.getElementById('info-accept-data');
 
-
 //////////////// WRONG INPUT ////////////////////////////////////////////////////////
 var errorCredential = document.getElementById('error-credential');
 var errorPassword = document.getElementById('error-password');
