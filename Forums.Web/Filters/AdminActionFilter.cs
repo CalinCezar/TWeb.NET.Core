@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Forums.Web.Filters
@@ -26,11 +27,6 @@ namespace Forums.Web.Filters
                 if (profile != null && profile.Level == Domain.Enum.UserRole.Admin)
                 {
                     context.HttpContext.SetMySessionObject(profile);
-                }
-                else
-                {
-                    context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "HomePage" }));
-                    return;
                 }
             }
             await next();

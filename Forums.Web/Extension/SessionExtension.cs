@@ -1,31 +1,23 @@
-﻿using Forums.Domain.Entities.User;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Forums.Domain.Entities.User;
 using Newtonsoft.Json;
 
 namespace Forums.Web.Extension
 {
-    public static class SessionExtensions
+    public static class HttpContextExtensions
     {
-        public static void SetObject(this ISession session, string key, object value)
+        private const string SessionKey = "__SessionObject";
+
+        public static UserMinimal GetMySessionObject(this HttpContext context)
         {
-            session.SetString(key, JsonConvert.SerializeObject(value));
+            var sessionData = context.Session.GetString(SessionKey);
+            return sessionData != null ? JsonConvert.DeserializeObject<UserMinimal>(sessionData) : null;
         }
 
-        public static T GetObject<T>(this ISession session, string key)
-        {
-            var value = session.GetString(key);
-            return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
-        }
-        public static UserMinimal GetMySessionObject(this HttpContext current)
-        {
-            var sessionData = current?.Session.GetString("__SessionObject");
-            return sessionData == null ? null : JsonConvert.DeserializeObject<UserMinimal>(sessionData);
-        }
-
-        public static void SetMySessionObject(this HttpContext current, UserMinimal profile)
+        public static void SetMySessionObject(this HttpContext context, UserMinimal profile)
         {
             var sessionData = JsonConvert.SerializeObject(profile);
-            current.Session.SetString("__SessionObject", sessionData);
+            context.Session.SetString(SessionKey, sessionData);
         }
     }
 }

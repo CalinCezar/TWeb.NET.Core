@@ -16,13 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
-    options.Filters.Add(new ServiceFilterAttribute(typeof(AuthorisedActionFilter))); // Use typeof() to specify the filter type
-    options.Filters.Add(new ServiceFilterAttribute(typeof(AdminActionFilter))); // Use typeof() to specify the filter type
+    options.Filters.Add(typeof(SessionStatusFilter));
+    options.Filters.Add(typeof(AuthorisedActionFilter));
+    options.Filters.Add(typeof(AdminActionFilter));
 });
 
-// Register the filters as services
-builder.Services.AddScoped<AuthorisedActionFilter>();
-builder.Services.AddScoped<AdminActionFilter>();
 builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(cfg =>
 {

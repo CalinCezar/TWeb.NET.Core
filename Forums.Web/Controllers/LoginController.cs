@@ -9,18 +9,17 @@ using System.Threading.Tasks;
 
 namespace Forums.Web.Controllers
 {
-    public class LoginController : BaseController
+    public class LoginController : Controller
     {
         private readonly BusinessLogic.Interfaces.ISession _session;
 
-        public LoginController(BusinessLogic.Interfaces.ISession session) : base(session)
+        public LoginController(BusinessLogic.Interfaces.ISession session)
         {
             _session = session;
         }
 
         public IActionResult Index()
         {
-            //SessionStatus();
             return View();
         }
 
