@@ -5,11 +5,11 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forums.Web", "Forums.Web\Forums.Web.csproj", "{1BA3F699-74D1-4894-A778-EDCBAD0757AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forums.Domain", "Forums.Domain\Forums.Domain.csproj", "{76D6A6F8-FAA7-4AD2-9E2F-0A7566E8C283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forums.Domain", "Forums.Domain\Forums.Domain.csproj", "{76D6A6F8-FAA7-4AD2-9E2F-0A7566E8C283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forums.BusinessLogic", "Forums.BusinessLogic\Forums.BusinessLogic.csproj", "{932DA3A9-8D04-4357-A31F-00F4B95D86D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forums.BusinessLogic", "Forums.BusinessLogic\Forums.BusinessLogic.csproj", "{932DA3A9-8D04-4357-A31F-00F4B95D86D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forums.Helpers", "Forums.Helpers\Forums.Helpers.csproj", "{004B3F64-D02C-4804-8BD0-2F8D0974E689}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forums.Helpers", "Forums.Helpers\Forums.Helpers.csproj", "{004B3F64-D02C-4804-8BD0-2F8D0974E689}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
