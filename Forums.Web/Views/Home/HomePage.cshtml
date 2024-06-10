@@ -26,7 +26,16 @@
                                 <div class="row">
                                     <div class="col-md-1">
                                         <div class="left-user12923 left-user12923-repeat">
-                                            <a href="#"><img src="@postData.User.Photo" alt="image"></a>
+                                            @if (!string.IsNullOrEmpty(@postData.User.Photo))
+                                            {
+
+                                                <img src="@Url.Content(@postData.User.Photo)" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/icon_profile.png" />
+                                            }
+
                                             <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a>
                                         </div>
                                     </div>

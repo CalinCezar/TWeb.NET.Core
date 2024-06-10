@@ -5,7 +5,7 @@
 namespace Forums.BusinessLogic.Migrations
 {
     /// <inheritdoc />
-    public partial class NewInitial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

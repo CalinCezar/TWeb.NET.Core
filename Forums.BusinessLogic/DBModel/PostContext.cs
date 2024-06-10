@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Forums.Domain.Entities.Posts;
 using Forums.BusinessLogic.Interfaces;
-using Forums.Domain.Entities.Posts;
 using Forums.Domain.Entities.User;
 
 namespace Forums.BusinessLogic.DBModel

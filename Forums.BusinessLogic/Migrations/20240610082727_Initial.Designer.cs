@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forums.BusinessLogic.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20240610001132_NewInitial")]
-    partial class NewInitial
+    [Migration("20240610082727_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
