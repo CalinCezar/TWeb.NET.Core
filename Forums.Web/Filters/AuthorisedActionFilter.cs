@@ -22,7 +22,7 @@ namespace Forums.Web.Filters
             {
                 var loginStatus = context.HttpContext.Session.GetString("LoginStatus");
 
-                if (!string.IsNullOrEmpty(loginStatus) && loginStatus == "login")
+                if (loginStatus == "login")
                 {
                     controller.ViewBag.IsAuthenticated = true;
                 }

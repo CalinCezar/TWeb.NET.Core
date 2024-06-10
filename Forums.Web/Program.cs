@@ -21,6 +21,9 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(typeof(AdminActionFilter));
 });
 
+builder.Services.AddScoped<AuthorisedActionFilter>();
+builder.Services.AddScoped<SessionStatusFilter>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(cfg =>
 {

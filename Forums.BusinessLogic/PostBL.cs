@@ -16,17 +16,17 @@ namespace Forums.BusinessLogic
             base(userContext, sessionContext, mapper,postContext)
         {
         }
-        public Task<GeneralResp> SavePost(int userId, int postId)
+        public Task<GeneralResp> SavePost(Post postData)
         {
-            return SavePostAsync(userId, postId);
+            return SavePostAsync(postData);
         }
-        public Task<GeneralResp> UnSavePost(int userId, int postId)
+/*        public Task<GeneralResp> UnSavePost(int userId, int postId)
         {
             return UnSavePostAsync(userId, postId);
         }
         public Task<GeneralResp> ReplyToComment(int parentCommentId, int userId, string content)
         {
             return ReplyToCommentAsync(parentCommentId, userId, content);
-        }
+        }*/
     }
 }

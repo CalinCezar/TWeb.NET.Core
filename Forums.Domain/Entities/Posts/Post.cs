@@ -1,11 +1,15 @@
-﻿namespace Forums.Domain.Entities.Posts
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace Forums.Domain.Entities.Posts
 {
     public class Post
     {
-        public int PostId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string Content { get; set; }
-        public ICollection<Like> Likes { get; set; }
-        public ICollection<SavedPost> SavedByUsers { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public string Title { get; set; }
+        public int AuthorId { get; set; }
     }
 }

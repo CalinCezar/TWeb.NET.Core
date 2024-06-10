@@ -14,6 +14,19 @@
     <link href="~/css/editor.css" rel="stylesheet" type="text/css">
     <link href="~/css/animate.css" rel="stylesheet" type="text/css">
     <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.tiny.cloud/1/jojphmoplgqms66cwqdr8c3rac1xkcydwne9vx6sl4vk1fgv/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#tiny',
+            plugins: [
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'markdown',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist checklist outdent indent | removeformat | code table help'
+        });
+    </script>
 </head>
 <link href="~/css/responsive.css" rel="stylesheet" type="text/css">
 

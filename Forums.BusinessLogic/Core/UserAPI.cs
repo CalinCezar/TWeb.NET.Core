@@ -225,29 +225,21 @@ namespace Forums.BusinessLogic.Core
             return result == null ? new GeneralResp { Status = false } : new GeneralResp { Status = true };
         }
 
-        public async Task<GeneralResp> SavePostAsync(int userId, int postId)
+        public async Task<GeneralResp> SavePostAsync(Post postData)
         {
-            var existingSavedPost = await _postContext.SavedPosts
-                .FirstOrDefaultAsync(sp => sp.UserId == userId && sp.PostId == postId);
-
-            if (existingSavedPost != null)
+            if (postData == null)
             {
-                return new GeneralResp { Status = false, StatusMsg = "Post already saved" };
+                return new GeneralResp { Status = false, StatusMsg = "Post data cannot be null" };
             }
-
-            var savedPost = new SavedPost
-            {
-                UserId = userId,
-                PostId = postId
-            };
-
-            _postContext.SavedPosts.Add(savedPost);
-            await _userContext.SaveChangesAsync();
+           
+            _postContext.Posts.Add(postData);
+            await _postContext.SaveChangesAsync();
 
             return new GeneralResp { Status = true, StatusMsg = "Post saved successfully" };
         }
 
-        public async Task<GeneralResp> UnSavePostAsync(int userId, int postId)
+
+        /*public async Task<GeneralResp> UnSavePostAsync(int userId, int postId)
         {
             var savedPost = await _postContext.SavedPosts
                 .FirstOrDefaultAsync(sp => sp.UserId == userId && sp.PostId == postId);
@@ -285,7 +277,7 @@ namespace Forums.BusinessLogic.Core
             await _userContext.SaveChangesAsync();
 
             return new GeneralResp { Status = true, StatusMsg = "Reply added successfully" };
-        }
+        }*/
 
     }
 }
