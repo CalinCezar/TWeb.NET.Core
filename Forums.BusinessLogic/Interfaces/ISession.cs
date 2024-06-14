@@ -5,14 +5,9 @@ using System.Threading.Tasks;
 
 namespace Forums.BusinessLogic.Interfaces
 {
-    public interface ISession
+    public interface IMySession
     {
-        Task<GeneralResp> UserPassCheckActionAsync(ULoginData data);
-        Task<GeneralResp> RegisterNewUserActionAsync(URegisterData data);
         Task<string> GenCookieAsync(string loginCredential);
-        Task<UserMinimal> GetUserByCookieAsync(string apiCookieValue);
-        Task<GeneralResp> SendEmailToUserActionAsync(string email, string name, string subject, string body);
-        Task<GeneralResp> ResetPasswordActionAsync(string email, string password);
-        Task<GeneralResp> ExistingEmailInDBAsync(string email);
+        Task<Session> GetSessionByCookieAsync(string cookie);
     }
 }

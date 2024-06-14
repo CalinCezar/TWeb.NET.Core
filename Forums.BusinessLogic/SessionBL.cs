@@ -9,46 +9,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace Forums.BusinessLogic
 {
-    public class SessionBL : UserApi, Forums.BusinessLogic.Interfaces.ISession
+    public class SessionBL : SessionAPI, IMySession
     {
-        public SessionBL(UserContext userContext, SessionContext sessionContext, IMapper mapper, PostContext postContext)
-            : base(userContext, sessionContext, mapper, postContext)
+        public SessionBL(SessionContext sessionContext)
+            : base( sessionContext)
         {
-        }
-
-        public Task<GeneralResp> UserPassCheckActionAsync(ULoginData data)
-        {
-            return UserAuthLogicAsync(data);
-        }
-
-        public Task<GeneralResp> RegisterNewUserActionAsync(URegisterData data)
-        {
-            return RegisterUserActionAsync(data);
         }
 
         public Task<string> GenCookieAsync(string loginCredential)
         {
             return CreateCookieAsync(loginCredential);
-        }
-
-        public Task<UserMinimal> GetUserByCookieAsync(string apiCookieValue)
-        {
-            return UserCookieAsync(apiCookieValue);
-        }
-
-        public Task<GeneralResp> SendEmailToUserActionAsync(string email, string name, string subject, string body)
-        {
-            return SendEmailAsync(email, name, subject, body);
-        }
-
-        public Task<GeneralResp> ResetPasswordActionAsync(string email, string password)
-        {
-            return ResetPasswordAsync(email, password);
-        }
-
-        public Task<GeneralResp> ExistingEmailInDBAsync(string email)
-        {
-            return ExistingEmailAsync(email);
         }
     }
 }

@@ -12,11 +12,13 @@ namespace Forums.Web.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly BusinessLogic.Interfaces.ISession _session;
+        private readonly IMySession _session;
+        private readonly IUser _user;
 
-        public RegisterController(BusinessLogic.Interfaces.ISession session)
+        public RegisterController(IMySession session, IUser user)
         {
             _session = session;
+            _user = user;
         }
 
         // GET: Register
@@ -26,6 +28,7 @@ namespace Forums.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var result = HttpContext.Session.GetInt32("VerificationCode");
                 if ((HttpContext.Session.GetInt32("VerificationCode") ?? 0) != uRegis.VerificationCode)
                 {
                     ModelState.AddModelError("", "Invalid verification code!");
@@ -43,7 +46,7 @@ namespace Forums.Web.Controllers
                 };
 
 
-                GeneralResp resp = await _session.RegisterNewUserActionAsync(user);
+                GeneralResp resp = await _user.RegisterNewUserActionAsync(user);
 
                 if (resp.Status)
                 {
@@ -71,10 +74,11 @@ namespace Forums.Web.Controllers
             Random random = new Random();
             int verificationCode = random.Next(123456, 1000000);
 
-            GeneralResp resp = await _session.SendEmailToUserActionAsync(email, "Name", "Verification code for account registration", "Code: " + verificationCode);
+            GeneralResp resp = await _user.SendEmailToUserActionAsync(email, "Name", "Verification code for account registration", "Code: " + verificationCode);
             if (resp.Status)
             {
                 HttpContext.Session.SetInt32("VerificationCode", verificationCode);
+                var result = HttpContext.Session.GetInt32("VerificationCode");
             }
             return Json(new { success = resp.Status });
         }

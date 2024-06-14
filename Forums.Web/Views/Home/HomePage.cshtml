@@ -58,6 +58,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="ques-icon-info3293">
+                                            @if(ViewBag.IsAdmin)
+                                            {
+                                                <button class="btn delete-post-btn custom-btn-style" style="background-color: #dc3545; border-color: #dc3545; padding: .5rem 1rem; font-size: 1.1rem;" data-post-id="@postData.post.Id">Delete</button>
+
+                                            }
                                             <a href="#" type="button"><i class="fa fa-comment" aria-hidden="true"> 3 answers</i></a>
                                             <a href="#" type="button"><i class="fa fa-user-circle-o" aria-hidden="true"> 70 views</i></a>
                                         </div>
@@ -170,3 +175,46 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function () {
+        $('.delete-post-btn').click(function (e) {
+            e.preventDefault();
+            var postId = $(this).data('post-id');
+
+            swal({
+                title: "Are you sure?",
+                text: "This post will be deleted permanently!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: '@Url.Action("DeletePost", "Post")',
+                            type: 'POST',
+                            data: { id: postId },
+                            success: function (response) {
+                                if (response.success) {
+                                    swal("Deleted", {
+                                        icon: "success"
+                                    }).then(() => {
+                                        location.reload();
+
+                                    });
+                                } else {
+                                    swal("Error", "response not succes.", "error");
+                                }
+                            },
+                            error: function () {
+                                swal("Error", "Error function.", "error");
+                            }
+                        });
+                    } else {
+                        swal("The post is safe!");
+                    }
+                });
+        });
+    });
+
+</script>

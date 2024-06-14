@@ -1,4 +1,4 @@
-﻿@model Forums.Web.Models.UserData
+﻿@model Forums.Web.Models.UsersPostsViewModel
 @{
     ViewBag.Title = "Profile";
     Layout = null;
@@ -8,6 +8,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link href="~/css/profile.css" rel="stylesheet" />
+
 <title>#BlogHub</title>
 <link rel="icon" type="image/x-icon" href="~/images/icon.png">
 <div class="container emp-profile">
@@ -78,13 +79,13 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    @if (string.IsNullOrEmpty(Model.Photo))
+                    @if (string.IsNullOrEmpty(Model.User.Photo))
                     {
                         <img id="profile-img" src="~/images/icon_profile.png" />
                     }
                     else
                     {
-                        <img id="profile-img" src="@Url.Content(Model.Photo)" />
+                        <img id="profile-img" src="@Url.Content(Model.User.Photo)" />
                     }
                     <div class="file btn btn-lg btn-primary">
                         <input type="file" id="PhotoInput" name="Photo" />
@@ -124,12 +125,12 @@
                 <div class="profile-head">
                     <h5>
                         @{
-                            @Html.DisplayFor(u => u.Username)
+                            @Html.DisplayFor(u => u.User.Username)
                         }
                     </h5>
                     <h6>
                         @{
-                            @Html.DisplayFor(u => u.Profession)
+                            @Html.DisplayFor(u => u.User.Profession)
                         }
                     </h6>
 
@@ -171,8 +172,8 @@
                             <div class="col-md-6">
                                 <div class="input-data">
                                     <div id="error-username" class="text-red"></div>
-                                    @Html.ValidationMessageFor(m => m.Fullname, "", new { @class = "text-red" })
-                                    <input class="form-control" id="Fullname" name="Fullname" type="text" placeholder="Enter your fullname" value="@{@Html.DisplayFor(u => u.Fullname)}" />
+                                    @Html.ValidationMessageFor(m => m.User.Fullname, "", new { @class = "text-red" })
+                                    <input class="form-control" id="Fullname" name="Fullname" type="text" placeholder="Enter your fullname" value="@{@Html.DisplayFor(u => u.User.Fullname)}" />
                                 </div>
                             </div>
                         </div>
@@ -182,8 +183,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div id="error-email" class="text-red"></div>
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-red" })
-                                <input class="form-control" id="Email" name="Email" type="email" placeholder="Enter your email" value="@{@Html.DisplayFor(u => u.Email)}" required />
+                                @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-red" })
+                                <input class="form-control" id="Email" name="Email" type="email" placeholder="Enter your email" value="@{@Html.DisplayFor(u => u.User.Email)}" required />
                             </div>
                         </div>
                         <div class="row" style="margin-bottom:10px;">
@@ -193,8 +194,8 @@
                             <div class="col-md-6">
                                 <div class="input-data">
                                     <div id="error-phone" class="text-red"></div>
-                                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-red" })
-                                    <input class="form-control" id="PhoneNumber" name="PhoneNumber" type="text" placeholder="Enter your phone number" value="@{@Html.DisplayFor(u => u.PhoneNumber)}" />
+                                    @Html.ValidationMessageFor(m => m.User.PhoneNumber, "", new { @class = "text-red" })
+                                    <input class="form-control" id="PhoneNumber" name="PhoneNumber" type="text" placeholder="Enter your phone number" value="@{@Html.DisplayFor(u => u.User.PhoneNumber)}" />
                                 </div>
 
                             </div>
@@ -205,8 +206,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div id="error-profession" class="text-red"></div>
-                                @Html.ValidationMessageFor(m => m.Profession, "", new { @class = "text-red" })
-                                <input class="form-control" id="Profession" name="Profession" type="text" placeholder="Enter your profession" value="@{@Html.DisplayFor(u => u.Profession)}" />
+                                @Html.ValidationMessageFor(m => m.User.Profession, "", new { @class = "text-red" })
+                                <input class="form-control" id="Profession" name="Profession" type="text" placeholder="Enter your profession" value="@{@Html.DisplayFor(u => u.User.Profession)}" />
                             </div>
                         </div>
                         <div class="row" style="margin-bottom:10px;">
@@ -216,8 +217,8 @@
                             <div class="col-md-6">
                                 <div class="input-data">
                                     <div id="error-info" class="text-red"></div>
-                                    @Html.ValidationMessageFor(m => m.InfoBlog, "", new { @class = "text-red" })
-                                    <textarea rows="3" class="form-control" placeholder="Enter info about blog" name="InfoBlog" id="InfoBlog">@{@Html.DisplayFor(u => u.InfoBlog)}</textarea>
+                                    @Html.ValidationMessageFor(m => m.User.InfoBlog, "", new { @class = "text-red" })
+                                    <textarea rows="3" class="form-control" placeholder="Enter info about blog" name="InfoBlog" id="InfoBlog">@{@Html.DisplayFor(u => u.User.InfoBlog)}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -231,12 +232,116 @@
                                 <p>Expert</p>
                             </div>
                         </div>
-                    </div>
+                        <section id="content1">
+                        @foreach (var postData in Model.Posts)
+                        {
+                            <div class="question-type2033">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="left-user12923 left-user12923-repeat">
+                                            @if (!string.IsNullOrEmpty(@Model.User.Photo))
+                                            {
 
+                                                    <img src="@Url.Content(@Model.User.Photo)" alt="Image description" class="left-user12923img" style="width: 50px; height: 50px; border-radius: 50%;">
+
+
+
+                                            }
+                                            else
+                                            {
+                                                    <img src="~/images/icon_profile.png" class="left-user12923 " />
+                                            }
+
+                                            <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="right-description893">
+                                            <div id="que-hedder2983">
+                                                <h3><a href="#" target="_blank">@postData.Title</a></h3>
+                                            </div>
+                                            <div class="ques-details10018">
+                                                @Html.Raw(postData.Content)
+                                            </div>
+                                            <hr>
+                                            <div class="ques-icon-info3293">
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i></a>
+                                                <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress</i></a>
+                                                <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i></a>
+                                                <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="ques-icon-info3293">
+                                                <button class="btn btn-danger delete-post-btn" data-post-id="@postData.Id">Delete</button>
+                                                <script>
+                                                    $(document).ready(function () {
+                                                        if (localStorage.getItem('activeTab') === '#profile') {
+                                                            $('#home-tab').removeClass('active');
+                                                            $('#home').removeClass('show active');
+                                                            $('#profile-tab').addClass('active');
+                                                            $('#profile').addClass('show active');
+                                                        }
+                                                        $('.delete-post-btn').click(function (e) {
+                                                            e.preventDefault();
+                                                            var postId = $(this).data('post-id');
+
+                                                            swal({
+                                                                title: "Are you sure?",
+                                                                text: "This post will be deleted permanently!",
+                                                                icon: "warning",
+                                                                buttons: true,
+                                                                dangerMode: true
+                                                            })
+                                                                .then((willDelete) => {
+                                                                    if (willDelete) {
+                                                                        $.ajax({
+                                                                            url: '@Url.Action("DeletePost", "Post")',
+                                                                            type: 'POST',
+                                                                            data: { id: postId },
+                                                                            success: function (response) {
+                                                                                if (response.success) {
+                                                                                    swal("Deleted", {
+                                                                                        icon: "success"
+                                                                                    }).then(() => {
+                                                                                        localStorage.setItem('activeTab', '#profile');
+                                                                                            location.reload();
+                                                                                        
+                                                                                    });
+                                                                                } else {
+                                                                                    swal("Error", "response not succes.", "error");
+                                                                                }
+                                                                            },
+                                                                            error: function () {
+                                                                                swal("Error", "Error function.", "error");
+                                                                            }
+                                                                        });
+                                                                    } else {
+                                                                        swal("The post is safe!");
+                                                                    }
+                                                                });
+                                                        });
+                                                    });
+
+                                                </script>
+
+
+                                            <a href="#" type="button"><i class="fa fa-comment" aria-hidden="true"> 3 answers</i></a>
+                                            <a href="#" type="button"><i class="fa fa-user-circle-o" aria-hidden="true"> 70 views</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
-        <script src="~/js/edit-profile.js" type="text/javascript"></script>
+
+
+            <script src="~/js/edit-profile.js" type="text/javascript"></script>
     }
 </div>
 

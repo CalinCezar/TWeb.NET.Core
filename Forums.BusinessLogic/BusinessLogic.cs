@@ -13,9 +13,9 @@ namespace Forums.BusinessLogic
             _serviceProvider = serviceProvider;
         }
 
-        public ISession GetSessionBL()
+        public IMySession GetSessionBL()
         {
-            return _serviceProvider.GetRequiredService<ISession>();
+            return _serviceProvider.GetRequiredService<IMySession>();
         }
 
         public IUser GetUserBL()

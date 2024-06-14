@@ -10,5 +10,6 @@ namespace Forums.Web.Models
 
         [Required(ErrorMessage = "The title is required")]
         public string Title { get; set; }
+        public DateTime DateOfCreation { get; set; }
     }
 }

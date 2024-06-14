@@ -10,11 +10,11 @@ namespace Forums.Web.Controllers
 {
     public class ResetPasswordController : Controller
     {
-        private readonly BusinessLogic.Interfaces.ISession _session;
+        private readonly IUser _user;
 
-        public ResetPasswordController(BusinessLogic.Interfaces.ISession session)
+        public ResetPasswordController(IUser user)
         {
-            _session = session;
+            _user = user;
         }
 
         // GET: ResetPassword
@@ -29,7 +29,7 @@ namespace Forums.Web.Controllers
         {
             if (!string.IsNullOrEmpty(uRegis.Email))
             {
-                GeneralResp resp = await _session.ExistingEmailInDBAsync(uRegis.Email);
+                GeneralResp resp = await _user.ExistingEmailInDBAsync(uRegis.Email);
                 if (!resp.Status)
                 {
                     return View(uRegis);
@@ -45,7 +45,7 @@ namespace Forums.Web.Controllers
                 HttpContext.Session.SetString("Email", uRegis.Email);
 
                 string resetLink = Url.Action("Reset", "ResetPassword", new { token = token, email = uRegis.Email }, protocol: Request.Scheme);
-                var response = await _session.SendEmailToUserActionAsync(uRegis.Email, "Name", "Reset your password", $"Please reset your password by clicking on this link: {resetLink}");
+                var response = await _user.SendEmailToUserActionAsync(uRegis.Email, "Name", "Reset your password", $"Please reset your password by clicking on this link: {resetLink}");
 
                 return Json(new { success = response.Status });
             }
@@ -75,7 +75,7 @@ namespace Forums.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            GeneralResp resp = await _session.ResetPasswordActionAsync(email, data.Password);
+            GeneralResp resp = await _user.ResetPasswordActionAsync(email, data.Password);
             HttpContext.Session.Remove("ResetToken");
             HttpContext.Session.Remove("ResetTokenExpiration");
             HttpContext.Session.Remove("Email");

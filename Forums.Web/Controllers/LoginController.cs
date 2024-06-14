@@ -11,11 +11,13 @@ namespace Forums.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly BusinessLogic.Interfaces.ISession _session;
+        private readonly IUser _user;
+        private readonly IMySession _session;
 
-        public LoginController(BusinessLogic.Interfaces.ISession session)
+        public LoginController(IMySession session, IUser user)
         {
             _session = session;
+            _user = user;
         }
 
         public IActionResult Index()
@@ -37,7 +39,7 @@ namespace Forums.Web.Controllers
                     LoginDateTime = DateTime.Now
                 };
 
-                GeneralResp resp = await _session.UserPassCheckActionAsync(user);
+                GeneralResp resp = await _user.UserPassCheckActionAsync(user);
 
                 if (resp.Status)
                 {

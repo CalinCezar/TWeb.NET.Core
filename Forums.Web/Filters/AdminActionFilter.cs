@@ -9,27 +9,41 @@ using System.Threading.Tasks;
 
 namespace Forums.Web.Filters
 {
-    public class AdminActionFilter : IAsyncActionFilter
+    public class AdminActionFilter : ActionFilterAttribute
     {
-        private readonly BusinessLogic.Interfaces.ISession _session;
+        private readonly IUser _user;
+        private readonly IMySession _session;
 
-        public AdminActionFilter(BusinessLogic.Interfaces.ISession session)
+        public AdminActionFilter(IUser user, IMySession session)
         {
+            _user = user;
             _session = session;
         }
 
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public override async void OnResultExecuting(ResultExecutingContext context)
         {
-            var apiCookie = context.HttpContext.Request.Cookies["X-Key"];
-            if (apiCookie != null)
+            var controller = context.Controller as Controller;
+            var sessionTask = _session.GetSessionByCookieAsync(context.HttpContext.Request.Cookies["X-Key"]);
+            var session = await sessionTask;
+            if (session != null)
             {
-                var profile = await _session.GetUserByCookieAsync(apiCookie);
+                var profileTask = _user.GetUserBySessionAsync(session);
+                var profile = await profileTask;
                 if (profile != null && profile.Level == Domain.Enum.UserRole.Admin)
                 {
-                    context.HttpContext.SetMySessionObject(profile);
+                    controller.ViewBag.IsAdmin = true;
+                }
+                else
+                {
+                    controller.ViewBag.IsAdmin = false;
                 }
             }
-            await next();
+            else
+            {
+                controller.ViewBag.IsAdmin = false;
+            }
         }
+
+
     }
 }

@@ -8,16 +8,20 @@ using Forums.Domain.Entities.User;
 
 namespace Forums.BusinessLogic
 {
-    public class UserBL : UserApi, IUser
+    public class UserBL : UserAPI, IUser
     {
-        public UserBL(UserContext userContext, SessionContext sessionContext, IMapper mapper, PostContext postContext)
-            : base(userContext, sessionContext, mapper, postContext)
+        public UserBL(UserContext userContext, IMapper mapper)
+            : base(userContext, mapper)
         {
         }
 
         public Task<UserMinimal> GetUserDataActionAsync(int ID)
         {
-            return GetUserDataAsync(ID);
+            return GetUserDataByIdAsync(ID);
+        }
+        public Task<UserMinimal> GetUserByCookieAsync(Session session)
+        {
+            return GetUserBySessionAsync(session);
         }
 
         public Task<GeneralResp> EditUserDataActionAsync(UserMinimal data, int ID)
@@ -33,6 +37,31 @@ namespace Forums.BusinessLogic
         public Task<GeneralResp> UploadPhotoActionAsync(string photo, int ID)
         {
             return UploadPhotoAsync(photo, ID);
+        }
+
+        public Task<GeneralResp> UserPassCheckActionAsync(ULoginData data)
+        {
+            return UserAuthLogicAsync(data);
+        }
+
+        public Task<GeneralResp> RegisterNewUserActionAsync(URegisterData data)
+        {
+            return RegisterUserActionAsync(data);
+        }
+        public Task<GeneralResp> ResetPasswordActionAsync(string email, string password)
+        {
+            return ResetPasswordAsync(email, password);
+        }
+
+        public Task<GeneralResp> SendEmailToUserActionAsync(string email, string name, string subject, string body)
+        {
+            return SendEmailAsync(email, name, subject, body);
+        }
+
+
+        public Task<GeneralResp> ExistingEmailInDBAsync(string email)
+        {
+            return ExistingEmailAsync(email);
         }
     }
 }

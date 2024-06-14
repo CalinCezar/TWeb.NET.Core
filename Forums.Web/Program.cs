@@ -40,8 +40,8 @@ builder.Services.AddDbContext<SessionContext>(options =>
 builder.Services.AddDbContext<PostContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register ISession, IUser, IPost
-builder.Services.AddScoped<Forums.BusinessLogic.Interfaces.ISession, SessionBL>();
+// Register IMySession, IUser, IPost
+builder.Services.AddScoped<IMySession, SessionBL>();
 builder.Services.AddScoped<IUser, UserBL>();
 builder.Services.AddScoped<IPost, PostBL>();
 

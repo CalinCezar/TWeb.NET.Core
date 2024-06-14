@@ -6,19 +6,21 @@ using Forums.Web.Extension;
 
 public class SessionStatusFilter : IAsyncActionFilter
 {
-    private readonly Forums.BusinessLogic.Interfaces.ISession _session;
+    private readonly IMySession _session;
+    private readonly IUser _user;
 
-    public SessionStatusFilter(Forums.BusinessLogic.Interfaces.ISession session)
+    public SessionStatusFilter(IMySession session, IUser user)
     {
         _session = session;
+        _user = user;
     }
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        var apiCookie = context.HttpContext.Request.Cookies["X-KEY"];
-        if (apiCookie != null)
+        var session = await _session.GetSessionByCookieAsync(context.HttpContext.Request.Cookies["X-KEY"]);
+        if (session != null)
         {
-            var profile = await _session.GetUserByCookieAsync(apiCookie);
+            var profile = await _user.GetUserBySessionAsync(session);
             if (profile != null)
             {
                 context.HttpContext.SetMySessionObject(profile);

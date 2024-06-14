@@ -1,4 +1,5 @@
-﻿using Forums.BusinessLogic;
+﻿using Azure;
+using Forums.BusinessLogic;
 using Forums.BusinessLogic.Interfaces;
 using Forums.Domain.Entities.Posts;
 using Forums.Domain.Entities.Response;
@@ -12,9 +13,9 @@ namespace Forums.Web.Controllers
     public class PostController : Controller
     {
         private readonly IPost _postService;
-        private readonly BusinessLogic.Interfaces.ISession _session;
+        private readonly IMySession _session;
 
-        public PostController(IPost postService, BusinessLogic.Interfaces.ISession session)
+        public PostController(IPost postService, IMySession session)
                 {
                     _postService = postService;
                     _session = session;
@@ -46,43 +47,42 @@ namespace Forums.Web.Controllers
                     {
                         Content = postData.Content,
                         Title = postData.Title,
-                        AuthorId = user.Id
+                        AuthorId = user.Id,
+                        DateOfCreation = DateTime.Now,
                     };
 
                     GeneralResp generalResp = await _postService.SavePost(postD);
 
                     if (generalResp.Status)
                     {
-                        return RedirectToAction("HomePage", "Home"); // Redirect to another action or view upon success
+                        return RedirectToAction("HomePage", "Home"); 
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, generalResp.StatusMsg); // Add error message to model state
+                        ModelState.AddModelError(string.Empty, generalResp.StatusMsg);
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Login"); // Redirect to login if user is not authenticated
+                    return RedirectToAction("Index", "Login"); 
                 }
             }
 
-            return View(postData); // Return the view with the model if invalid
+            return View(postData); 
         }
 
-        /*        [HttpPost]
-                public async Task<IActionResult> SavePost()
-                {
-                    var user = HttpContext.GetMySessionObject();
-                    var result = await _postService.SavePost(0, user.Id);
-
-                    if (result.Status)
-                    {
-                        return Ok(new { Message = "Post saved successfully" });
-                    }
-                    else
-                    {
-                        return BadRequest(new { Message = "Failed to save post" });
-                    }
-                }*/
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            GeneralResp response = await _postService.DeletePost(id);
+            if (response.Status)
+            {
+                return Json(new { success = true});
+            }
+            else
+            {
+                return Json(new { success = false });
+            }
+        }
     }
 }

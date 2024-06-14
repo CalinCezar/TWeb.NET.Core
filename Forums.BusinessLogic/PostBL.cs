@@ -10,23 +10,31 @@ using Microsoft.AspNetCore.Http;
 
 namespace Forums.BusinessLogic
 {
-    public class PostBL : UserApi, IPost
+    public class PostBL : PostAPI, IPost
     {
-        public PostBL(UserContext userContext, SessionContext sessionContext, IMapper mapper, PostContext postContext) :
-            base(userContext, sessionContext, mapper,postContext)
+        public PostBL(PostContext postContext) :
+            base(postContext)
         {
         }
         public Task<GeneralResp> SavePost(Post postData)
         {
             return SavePostAsync(postData);
         }
-/*        public Task<GeneralResp> UnSavePost(int userId, int postId)
+        public Task<List<Post>> GetUserPosts(int UserId)
         {
-            return UnSavePostAsync(userId, postId);
+            return GetUserPostsAsync(UserId);
         }
-        public Task<GeneralResp> ReplyToComment(int parentCommentId, int userId, string content)
+        public Task<List<Post>> GetRecentPosts()
         {
-            return ReplyToCommentAsync(parentCommentId, userId, content);
-        }*/
+            return GetRecentPostsAsync();
+        }
+        public Task<GeneralResp> DeleteUserPosts(int UserId) 
+        {
+            return DeleteUserPostsAsync(UserId);
+        }
+        public Task<GeneralResp> DeletePost(int PostId)
+        {
+            return DeletePostAsync(PostId);
+        }
     }
 }

@@ -13,41 +13,38 @@ namespace Forums.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PostContext _postContext;
-        private readonly UserContext _userContext;
+        private readonly IPost _post;
+        private readonly IUser _user;
+        private readonly IMySession _session;
 
-        public HomeController(PostContext postContext, UserContext userContext)
+        public HomeController(IPost post, IMySession session, IUser user)
         {
-            _postContext = postContext;
-            _userContext = userContext;
+            _post = post;
+            _session = session;
+            _user = user;
         }
 
         public async Task<IActionResult> HomePage()
         {
-            var posts = await _postContext.Posts.Take(10).ToListAsync();
-
+            var posts = await _post.GetRecentPosts();
             var postDataList = new List<PostUserViewModel>();
 
-            foreach (var post in posts)
+            if (posts.Any())
             {
-                var user = await _userContext.Users.FindAsync(post.AuthorId);
-                var userData = new UserData
+                foreach (var post in posts)
                 {
-                    Username = user.Username,
-                    Photo = user.Photo,
-                };
+                    var user = await _user.GetUserDataByIdAsync(post.AuthorId);
+                    var userData = user != null ? new UserData { Username = user.Username, Photo = user.Photo } : new UserData();
 
-                var postData = new PostUserViewModel
-                {
-                    post = post,
-                    User = userData,
-                };
-
-                postDataList.Add(postData);
+                    var postData = new PostUserViewModel
+                    {
+                        post = post,
+                        User = userData,
+                    };
+                    postDataList.Add(postData);
+                }
             }
-
-            // Pass the list of view models to the view
-            return View(postDataList);
+            return View(postDataList); 
         }
     }
 }

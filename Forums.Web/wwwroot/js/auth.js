@@ -60,7 +60,7 @@ function validateEmail() {
     return false;
 }
 function validateInfo() {
-    if (info.value.length <= 150 && info.value.length != 0) {
+    if (info.value.length <= 150 || info.value.length == 0) {
     infoAccept.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
         return true;
     }

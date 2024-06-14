@@ -8,9 +8,9 @@ namespace Forums.Web.Filters
 {
     public class AuthorisedActionFilter : ActionFilterAttribute
     {
-        private readonly BusinessLogic.Interfaces.ISession _session;
+        private readonly IMySession _session;
 
-        public AuthorisedActionFilter(BusinessLogic.Interfaces.ISession session)
+        public AuthorisedActionFilter(IMySession session)
         {
             _session = session;
         }
