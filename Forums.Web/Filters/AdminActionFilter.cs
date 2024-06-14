@@ -1,15 +1,11 @@
 ﻿using Forums.BusinessLogic.Interfaces;
-using Forums.Web.Extension;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Routing;
-using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Forums.Web.Filters
 {
-    public class AdminActionFilter : ActionFilterAttribute
+    public class AdminActionFilter : IAsyncActionFilter
     {
         private readonly IUser _user;
         private readonly IMySession _session;
@@ -20,30 +16,33 @@ namespace Forums.Web.Filters
             _session = session;
         }
 
-        public override async void OnResultExecuting(ResultExecutingContext context)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var controller = context.Controller as Controller;
-            var sessionTask = _session.GetSessionByCookieAsync(context.HttpContext.Request.Cookies["X-Key"]);
-            var session = await sessionTask;
-            if (session != null)
+            if (controller != null)
             {
-                var profileTask = _user.GetUserBySessionAsync(session);
-                var profile = await profileTask;
-                if (profile != null && profile.Level == Domain.Enum.UserRole.Admin)
+                var sessionTask = _session.GetSessionByCookieAsync(context.HttpContext.Request.Cookies["X-Key"]);
+                var session = await sessionTask;
+                if (session != null)
                 {
-                    controller.ViewBag.IsAdmin = true;
+                    var profileTask = _user.GetUserBySessionAsync(session);
+                    var profile = await profileTask;
+                    if (profile != null && profile.Level == Domain.Enum.UserRole.Admin)
+                    {
+                        controller.ViewBag.IsAdmin = true;
+                    }
+                    else
+                    {
+                        controller.ViewBag.IsAdmin = false;
+                    }
                 }
                 else
                 {
                     controller.ViewBag.IsAdmin = false;
                 }
             }
-            else
-            {
-                controller.ViewBag.IsAdmin = false;
-            }
+
+            await next(); // Call the next action filter or the action method itself
         }
-
-
     }
 }
