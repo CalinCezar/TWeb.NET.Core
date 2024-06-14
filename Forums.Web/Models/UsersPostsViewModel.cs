@@ -1,9 +1,9 @@
-﻿using Forums.Domain.Entities.Posts;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Forums.Web.Models
 {
     public class UsersPostsViewModel: UserData
     {
-        public List<Post> Posts { get; set; }
+        public List<PostData>? Posts { get; set; }
     }
 }

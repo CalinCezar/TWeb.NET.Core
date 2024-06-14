@@ -105,6 +105,7 @@ namespace Forums.Web.Controllers
 
             var userByID = await _user.GetUserDataByIdAsync(user.Id);
             var userPosts = await _post.GetUserPosts(user.Id);
+           
             var currentUser = new UsersPostsViewModel()
             {
                     Username = userByID.Username,
@@ -114,7 +115,13 @@ namespace Forums.Web.Controllers
                     Photo = userByID.Photo,
                     PhoneNumber = userByID.PhoneNumber,
                     Profession = userByID.Profession,
-                    Posts = userPosts,
+                    Posts = userPosts.Select(post => new PostData
+                    {
+                        Id = post.Id,
+                        Content = post.Content,
+                        Title = post.Title,
+                        DateOfCreation = post.DateOfCreation
+                    }).ToList()
             };
             return View(currentUser);
         }

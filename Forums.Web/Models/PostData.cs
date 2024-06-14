@@ -5,10 +5,11 @@ namespace Forums.Web.Models
 {
     public class PostData
     {
-        [Required(ErrorMessage = "The content is required")]
+        public int Id { get; set; }
+     //   [Required(ErrorMessage = "The content is required")]
         public string Content { get; set; }
 
-        [Required(ErrorMessage = "The title is required")]
+     //   [Required(ErrorMessage = "The title is required")]
         public string Title { get; set; }
         public DateTime DateOfCreation { get; set; }
     }
