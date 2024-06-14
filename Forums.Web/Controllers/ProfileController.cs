@@ -68,18 +68,18 @@ namespace Forums.Web.Controllers
             var user = HttpContext.GetMySessionObject();
             if (ModelState.IsValid)
             {
-                data.User.Fullname = data.User.Fullname ?? String.Empty;
-                data.User.InfoBlog = data.User.InfoBlog ?? String.Empty;
-                data.User.Profession = data.User.Profession ?? String.Empty;
-                data.User.PhoneNumber = data.User.PhoneNumber ?? String.Empty;
+                data.Fullname = data.Fullname ?? String.Empty;
+                data.InfoBlog = data.InfoBlog ?? String.Empty;
+                data.Profession = data.Profession ?? String.Empty;
+                data.PhoneNumber = data.PhoneNumber ?? String.Empty;
 
                 var dataUser = new UserMinimal
                 {
-                    Fullname = data.User.Fullname,
-                    Email = data.User.Email,
-                    InfoBlog = data.User.InfoBlog,
-                    Profession = data.User.Profession,
-                    PhoneNumber = data.User.PhoneNumber,
+                    Fullname = data.Fullname,
+                    Email = data.Email,
+                    InfoBlog = data.InfoBlog,
+                    Profession = data.Profession,
+                    PhoneNumber = data.PhoneNumber,
                 };
 
                 GeneralResp resp = await _user.EditUserDataActionAsync(dataUser, user.Id);
@@ -107,8 +107,6 @@ namespace Forums.Web.Controllers
             var userPosts = await _post.GetUserPosts(user.Id);
             var currentUser = new UsersPostsViewModel()
             {
-                User = new UserData()
-                {
                     Username = userByID.Username,
                     Fullname = userByID.Fullname,
                     Email = userByID.Email,
@@ -116,8 +114,7 @@ namespace Forums.Web.Controllers
                     Photo = userByID.Photo,
                     PhoneNumber = userByID.PhoneNumber,
                     Profession = userByID.Profession,
-                },
-                Posts = userPosts,
+                    Posts = userPosts,
             };
             return View(currentUser);
         }

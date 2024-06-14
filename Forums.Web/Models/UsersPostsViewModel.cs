@@ -2,9 +2,8 @@
 
 namespace Forums.Web.Models
 {
-    public class UsersPostsViewModel
+    public class UsersPostsViewModel: UserData
     {
-        public UserData User { get; set; }
         public List<Post> Posts { get; set; }
     }
 }

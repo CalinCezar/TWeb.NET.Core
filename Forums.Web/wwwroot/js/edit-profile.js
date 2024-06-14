@@ -4,6 +4,7 @@ const username = document.getElementById('Fullname')
 const email = document.getElementById('Email')
 const info = document.getElementById('InfoBlog');
 const profession = document.getElementById('Profession')
+const posts = document.getElementById('Posts')
 //////////////// WRONG INPUT ////////////////////////////////////////////////////////
 var errorPhone = document.getElementById('error-phone');
 var errorUsername = document.getElementById('error-username');
@@ -22,6 +23,7 @@ edit.addEventListener('submit', (e) => {
     let messageEmail = []
     let messageInfoBlog = []
     let messageProfession = []
+    let messagePosts = []
 
     ///////////// USERNAME /////////////////////////////
     if (username.value.length > 30) {
@@ -45,6 +47,12 @@ edit.addEventListener('submit', (e) => {
     if (profession.value.length > 50) {
         messageProfession.push('Profession MAXIM 50 characters');
     }
+    if (posts) {
+        messagePosts.push('ok');
+    }
+    else {
+        messagePosts.push('ok');
+    }
     //////////// MESSAGE ON SCREEN/////////////////////
     if (messageUsername.length > 0) {
         e.preventDefault();
@@ -65,5 +73,9 @@ edit.addEventListener('submit', (e) => {
     if (messageProfession.length > 0) {
         e.preventDefault();
         errorProfession.innerText = messageProfession.join(', ');
+    }
+    if (messagePosts.length > 0) {
+        e.preventDefault();
+        errorProfession.innerText = messagePosts.join(', ');
     }
 });

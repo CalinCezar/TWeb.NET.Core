@@ -79,13 +79,13 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    @if (string.IsNullOrEmpty(Model.User.Photo))
+                    @if (string.IsNullOrEmpty(Model.Photo))
                     {
                         <img id="profile-img" src="~/images/icon_profile.png" />
                     }
                     else
                     {
-                        <img id="profile-img" src="@Url.Content(Model.User.Photo)" />
+                        <img id="profile-img" src="@Url.Content(Model.Photo)" />
                     }
                     <div class="file btn btn-lg btn-primary">
                         <input type="file" id="PhotoInput" name="Photo" />
@@ -125,12 +125,12 @@
                 <div class="profile-head">
                     <h5>
                         @{
-                            @Html.DisplayFor(u => u.User.Username)
+                            @Html.DisplayFor(u => u.Username)
                         }
                     </h5>
                     <h6>
                         @{
-                            @Html.DisplayFor(u => u.User.Profession)
+                            @Html.DisplayFor(u => u.Profession)
                         }
                     </h6>
 
@@ -172,8 +172,8 @@
                             <div class="col-md-6">
                                 <div class="input-data">
                                     <div id="error-username" class="text-red"></div>
-                                    @Html.ValidationMessageFor(m => m.User.Fullname, "", new { @class = "text-red" })
-                                    <input class="form-control" id="Fullname" name="Fullname" type="text" placeholder="Enter your fullname" value="@{@Html.DisplayFor(u => u.User.Fullname)}" />
+                                    @Html.ValidationMessageFor(m => m.Fullname, "", new { @class = "text-red" })
+                                    <input class="form-control" id="Fullname" name="Fullname" type="text" placeholder="Enter your fullname" value="@{@Html.DisplayFor(u => u.Fullname)}" />
                                 </div>
                             </div>
                         </div>
@@ -183,8 +183,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div id="error-email" class="text-red"></div>
-                                @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-red" })
-                                <input class="form-control" id="Email" name="Email" type="email" placeholder="Enter your email" value="@{@Html.DisplayFor(u => u.User.Email)}" required />
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-red" })
+                                <input class="form-control" id="Email" name="Email" type="email" placeholder="Enter your email" value="@{@Html.DisplayFor(u => u.Email)}" required />
                             </div>
                         </div>
                         <div class="row" style="margin-bottom:10px;">
@@ -194,8 +194,8 @@
                             <div class="col-md-6">
                                 <div class="input-data">
                                     <div id="error-phone" class="text-red"></div>
-                                    @Html.ValidationMessageFor(m => m.User.PhoneNumber, "", new { @class = "text-red" })
-                                    <input class="form-control" id="PhoneNumber" name="PhoneNumber" type="text" placeholder="Enter your phone number" value="@{@Html.DisplayFor(u => u.User.PhoneNumber)}" />
+                                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-red" })
+                                    <input class="form-control" id="PhoneNumber" name="PhoneNumber" type="text" placeholder="Enter your phone number" value="@{@Html.DisplayFor(u => u.PhoneNumber)}" />
                                 </div>
 
                             </div>
@@ -206,8 +206,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div id="error-profession" class="text-red"></div>
-                                @Html.ValidationMessageFor(m => m.User.Profession, "", new { @class = "text-red" })
-                                <input class="form-control" id="Profession" name="Profession" type="text" placeholder="Enter your profession" value="@{@Html.DisplayFor(u => u.User.Profession)}" />
+                                @Html.ValidationMessageFor(m => m.Profession, "", new { @class = "text-red" })
+                                <input class="form-control" id="Profession" name="Profession" type="text" placeholder="Enter your profession" value="@{@Html.DisplayFor(u => u.Profession)}" />
                             </div>
                         </div>
                         <div class="row" style="margin-bottom:10px;">
@@ -217,8 +217,8 @@
                             <div class="col-md-6">
                                 <div class="input-data">
                                     <div id="error-info" class="text-red"></div>
-                                    @Html.ValidationMessageFor(m => m.User.InfoBlog, "", new { @class = "text-red" })
-                                    <textarea rows="3" class="form-control" placeholder="Enter info about blog" name="InfoBlog" id="InfoBlog">@{@Html.DisplayFor(u => u.User.InfoBlog)}</textarea>
+                                    @Html.ValidationMessageFor(m => m.InfoBlog, "", new { @class = "text-red" })
+                                    <textarea rows="3" class="form-control" placeholder="Enter info about blog" name="InfoBlog" id="InfoBlog">@{@Html.DisplayFor(u => u.InfoBlog)}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -239,13 +239,10 @@
                                 <div class="row">
                                     <div class="col-md-1">
                                         <div class="left-user12923 left-user12923-repeat">
-                                            @if (!string.IsNullOrEmpty(@Model.User.Photo))
+                                            @if (!string.IsNullOrEmpty(@Model.Photo))
                                             {
 
-                                                    <img src="@Url.Content(@Model.User.Photo)" alt="Image description" class="left-user12923img" style="width: 50px; height: 50px; border-radius: 50%;">
-
-
-
+                                                    <img src="@Url.Content(@Model.Photo)" alt="Image description" class="left-user12923img" style="width: 50px; height: 50px; border-radius: 50%;">
                                             }
                                             else
                                             {
